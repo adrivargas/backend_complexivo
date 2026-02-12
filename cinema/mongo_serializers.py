@@ -14,7 +14,7 @@ class ReservationEventsSerializer(serializers.Serializer):
         CONFIRMED = "confirmado", "Confirmado"
         CANCELLED = "cancelado", "Cancelado"
         CHECKED_IN = "llegada", "Llegada"
-    estado = serializers.CharField(
+    event_type_string = serializers.CharField(
         max_length=20,
         default=event_type_string.CREATED
     )
@@ -22,10 +22,10 @@ class ReservationEventsSerializer(serializers.Serializer):
         WEB = "web", "Web"
         MOBILE = "movil", "Movil"
         SYSTEM = "sistema", "Sistema"
-    estado = serializers.CharField(
+    source_string = serializers.CharField(
         max_length=20,
         # choices=source_string.choices,
         default=source_string.SYSTEM
     )
     note = serializers.CharField(required=False)
-    created_at = serializers.DateField(auto_now_add=True)
+    created_at = serializers.DateField()

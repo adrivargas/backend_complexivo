@@ -5,7 +5,7 @@ from rest_framework import status
 from bson import ObjectId
 from bson.errors import InvalidId
 from .mongo import db
-from .mongo_serializers import VehicleServiceSerializer
+from .mongo_serializers import MovieCatalogSerializer
 
 col = db["cinema_logs"]
 
@@ -28,7 +28,7 @@ def vehicle_services_list_create(request):
         docs = [fix_id(d) for d in col.find(q)]
         return Response(docs)
 
-    serializer = VehicleServiceSerializer(data=request.data)
+    serializer = MovieCatalogSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
 
     res = col.insert_one(serializer.validated_data)
@@ -49,7 +49,7 @@ def vehicle_services_detail(request, id: str):
         return Response(fix_id(doc))
 
     if request.method in ["PUT", "PATCH"]:
-        serializer = VehicleServiceSerializer(data=request.data, partial=(request.method == "PATCH"))
+        serializer = MovieCatalogSerializer(data=request.data, partial=(request.method == "PATCH"))
         serializer.is_valid(raise_exception=True)
 
         col.update_one({"_id": _id}, {"$set": serializer.validated_data})
